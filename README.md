@@ -16,7 +16,6 @@ source blurg.env
 pip install -r requirements.txt
 ```
 
-Each team has its own Slack channel that corresponds to its project name.  The project also has a [UML diagram](doc/blurg.mdj) that serves as a good API reference.  The UML diagram should be kept up to date during each milestone using StarUML.
 
 ## Run
 
