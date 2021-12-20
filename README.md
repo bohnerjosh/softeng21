@@ -1,4 +1,8 @@
-# blurg-liger
+# softeng21
+
+This repository contains the software I created during my CMSC 360 Software Engineering class (Fall 2021). 
+
+The name of the program is blurg. 
 
 blurg is a command-line utility that manages diaries. Diaries may be stored locally, or they may be shared remotely through a server.
 
