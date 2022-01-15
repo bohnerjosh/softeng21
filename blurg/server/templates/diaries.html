@@ -1,0 +1,15 @@
+{% extends "site.html" %}
+
+{% block title %}Diaries{% endblock %}
+{% block head %}
+    {{ super() }}
+{% endblock %}
+
+{% block content %}
+<ul>
+{% for d in diaries: %}
+    <li><a href="{{ url_for('web_entries', diary_key=diary_keys[d] ) }}">{{ d }}</a></li>
+
+{% endfor %}
+</ul>
+{% endblock %}

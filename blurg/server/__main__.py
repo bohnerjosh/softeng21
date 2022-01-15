@@ -1,7 +1,7 @@
 from blurg.config import Config
 from blurg.diary import DiaryException, DiaryFactory
 from datetime import datetime
-from flask import Flask, abort, request, jsonify
+from flask import Flask, abort, request, jsonify, render_template, url_for
 from itsdangerous import URLSafeSerializer
 import os
 
@@ -28,6 +28,8 @@ def generate_key(diaryname, username):
 
 
 def get_diaryname_from_key(diarykey):
+    if diarykey == 'default':
+        return 'default'
     auth_s = URLSafeSerializer(os.environ['SECRET_KEY'], 'auth')
     data = auth_s.loads(diarykey)
     return data['diaryname']
@@ -164,6 +166,26 @@ def list_entries():
     }, entries))
 
     return jsonify({'result': entries})
+
+
+@app.route('/diaries', methods=['GET'])
+def web_diaries():
+    config = Config(SERVER_CONFIG_ROOT)
+    combo_diaries = config.get_diaries()
+    diary_objs = combo_diaries[0]
+    d_names = [get_diaryname_from_key(d.name) for d in diary_objs]
+    d_key_lst = [k.name for k in diary_objs]
+    d_keys = dict(zip(d_names, d_key_lst))
+    return render_template("diaries.html", diaries=d_names, diary_keys=d_keys)
+
+
+@app.route('/diaries/<string:diary_key>/', methods=['GET'])
+def web_entries(diary_key):
+    config = Config(SERVER_CONFIG_ROOT)
+    diary = DiaryFactory.get_diary(diary_key, config)
+    entries = diary.get_entries()
+    name = get_diaryname_from_key(diary_key)
+    return render_template("entries.html", entries=entries, name=name)
 
 
 @app.route('/')
