@@ -1,4 +1,8 @@
-# blurg-liger
+# softeng21
+
+This repository contains the software I created during my CMSC 360 Software Engineering class (Fall 2021). 
+
+The name of the program is blurg. 
 
 blurg is a command-line utility that manages diaries. Diaries may be stored locally, or they may be shared remotely through a server.
 
@@ -12,7 +16,6 @@ source blurg.env
 pip install -r requirements.txt
 ```
 
-Each team has its own Slack channel that corresponds to its project name.  The project also has a [UML diagram](doc/blurg.mdj) that serves as a good API reference.  The UML diagram should be kept up to date during each milestone using StarUML.
 
 ## Run
 
