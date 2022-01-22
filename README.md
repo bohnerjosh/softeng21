@@ -17,7 +17,7 @@ pip install -r requirements.txt
 ```
 
 
-## Run
+## Run - Command Line
 
 In one shell window, run the server.
 
@@ -90,6 +90,17 @@ Where:
 * `<remotediaryname>` is the name of the remote diary you'd like to demote
 * `<URL>` is the URL of the server you want to connect to
 * `<username>` is the username that your entries will be stored under for a given diary
+
+## Run - Web Browser
+
+You can view the remote diaries of a particular server if you know the server's ip and port. 
+
+To view the diaries on a web web browser go to the following address: 
+``http://<base_url>/diaries``, where <base_url> is the ip and port of the server you want to connect to.
+
+To view the entries for a particular diary, click the diary name you wish to see the entries for, and it will automatically pull entries from the server and display them.
+
+
 ## Tests
 
 In one shell window:
