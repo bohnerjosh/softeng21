@@ -1,11 +1,13 @@
 from blurg.config import Config
 from blurg.diary import DiaryException, DiaryFactory
 from datetime import datetime
-from flask import Flask, abort, request, jsonify, render_template, url_for
+from flask import Flask, abort, request, jsonify, render_template, url_for, session
 from itsdangerous import URLSafeSerializer
 import os
 
 app = Flask(__name__)
+app.secret_key = b'kjlaqetgffrvdup980j3'
+
 
 SERVER_CONFIG_ROOT = './.blurg-server'
 # Although it is called 'username, the authorization key is not
@@ -173,15 +175,26 @@ def web_diaries():
     config = Config(SERVER_CONFIG_ROOT)
     combo_diaries = config.get_diaries()
     diary_objs = combo_diaries[0]
+
     d_names = [get_diaryname_from_key(d.name) for d in diary_objs]
     d_key_lst = [k.name for k in diary_objs]
-    d_keys = dict(zip(d_names, d_key_lst))
-    return render_template("diaries.html", diaries=d_names, diary_keys=d_keys)
+
+    length = len(d_names)
+    ids = [i for i in range(length)]
+
+    session['keys'] = dict(zip(ids, d_key_lst))
+    return render_template(
+        "diaries.html",
+        d_names=d_names,
+        d_ids=ids,
+        _len=length
+    )
 
 
-@app.route('/diaries/<string:diary_key>/', methods=['GET'])
-def web_entries(diary_key):
+@app.route('/diaries/<string:diary_id>/', methods=['GET'])
+def web_entries(diary_id):
     config = Config(SERVER_CONFIG_ROOT)
+    diary_key = session['keys'][diary_id]
     diary = DiaryFactory.get_diary(diary_key, config)
     entries = diary.get_entries()
     name = get_diaryname_from_key(diary_key)
