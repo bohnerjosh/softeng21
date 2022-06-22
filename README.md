@@ -9,7 +9,7 @@ blurg is a command-line utility that manages diaries. Diaries may be stored loca
 ## Installation and Development
 
 ```
-git clone https://github.com/jbshep/blurg
+git clone https://github.com/bohnerjosh/softeng21
 cd blurg
 virtualenv -p python3 env
 source blurg.env
